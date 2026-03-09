@@ -43,6 +43,22 @@ using MvcCorePaginacionRegistros.Models;
 //   where OFICIO = @oficio) QUERY
 //   where (QUERY.POSICION >= @posicion and QUERY.POSICION < (@posicion + 3))
 
+//CREATE procedure SP_EMPLEADOS_DEPARTAMENTO
+//(@posicion int, @iddept int,
+//  @registros int out) as
+//   select  @registros = count(EMP_NO) from EMP
+//   where emp.DEPT_NO = @iddept
+//   select EMP_NO, APELLIDO, OFICIO, SALARIO, DEPT_NO from
+//   (select cast(row_number() over(order by APELLIDO) as int) as POSICION, EMP_NO, APELLIDO, OFICIO, SALARIO, DEPT_NO
+//   from V_GRUPO_EMPLEADOS
+//   where DEPT_NO = @iddept) QUERY
+//   where (QUERY.POSICION = @posicion)
+
+//   declare @registros int
+//   exec SP_EMPLEADOS_DEPARTAMENTO 1, 10, @registros
+
+//   select @registros
+
 #endregion
 namespace MvcCorePaginacionRegistros.Repositories
 {
