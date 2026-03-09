@@ -1,0 +1,43 @@
+﻿@model Empleado
+
+
+@if(Model == null)
+{
+    <h1>No hay empleados</h1>
+}
+else
+{
+    <div>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="RegistroVistaDepartamento" asp-route-posicion="1">
+                    Primero
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="RegistroVistaDepartamento" asp-route-posicion="@ViewBag.ANTERIOR">
+                    Anterior
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="RegistroVistaDepartamento" asp-route-posicion="@ViewBag.SIGUIENTE">
+                    Siguiente
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="RegistroVistaDepartamento" asp-route-posicion="@ViewBag.ULTIMO">
+                    Ultimo
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ul>
+        <li>Id empleado: @Model.IdEmpleado</li>
+        <li>Apellido: @Model.Apellido</li>
+        <li>Oficio: @Model.Oficio</li>
+        <li>Salario: @Model.Salario</li>
+        <li>Id departamento: @Model.IdDepartamento</li>
+    </ul>
+}
+

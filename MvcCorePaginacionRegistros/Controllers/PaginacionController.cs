@@ -137,5 +137,32 @@ namespace MvcCorePaginacionRegistros.Controllers
             ViewBag.OFICIO = oficio;
             return View(model.Empleados);
         }
+
+        public async Task<IActionResult> DepartamentoDetails(int iddept, int? posicion)
+        {
+            Departamento dept = await this.repo.GetDepartamentoByIdAsync(iddept);
+
+            if (posicion == null)
+            {
+                posicion = 1;
+            }
+            ViewBag.DEPT = dept;
+            Empleado emp = await this.repo.GetEmpleadosByDepartamentoAsync(iddept, posicion.Value);
+            ViewBag.SIGUIENTE = posicion + 1;
+            ViewBag.ANTERIOR = posicion - 1;
+            ViewBag.ULTIMO = emp.NumRegistros;
+
+            return View(emp);
+        }
+        public async Task<IActionResult> _EmpleadosDepartamento(int iddept, int posicion)
+        {
+            if (posicion == null)
+            {
+                posicion = 1;
+            }
+            Empleado emp = await this.repo.GetEmpleadosByDepartamentoAsync(iddept, posicion);
+            return PartialView("_EmpleadosDepartamento", emp);
+
+        }
     }
 }

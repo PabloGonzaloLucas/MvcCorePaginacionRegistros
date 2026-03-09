@@ -17,6 +17,8 @@ namespace MvcCorePaginacionRegistros.Models
         public int Salario { get; set; }
         [Column("DEPT_NO")]
         public int IdDepartamento { get; set; }
+        [NotMapped]
+        public int NumRegistros { get; set; }
 
     }
 }

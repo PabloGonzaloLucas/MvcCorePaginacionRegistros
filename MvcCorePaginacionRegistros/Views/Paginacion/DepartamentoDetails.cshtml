@@ -1,0 +1,69 @@
+﻿@model Empleado
+@{
+    Departamento departamento = ViewBag.DEPT;
+}
+
+@if(departamento != null)
+{
+    <ul>
+        <li>Id DEPT : @departamento.IdDepartamento</li>
+        <li>Nombre : @departamento.Nombre</li>
+        <li>Localidad : @departamento.Localidad</li>
+    </ul>
+}
+
+
+@if(Model == null)
+{
+    <h1>No hay empleados</h1>
+}
+else
+{
+    <div>
+        <ul class="list-group list-group-horizontal">
+           
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="DepartamentoDetails" asp-route-posicion="1" 
+                asp-route-iddept="@departamento.IdDepartamento">
+                    Primero
+                </a>
+            </li>
+            @if (ViewBag.ANTERIOR >= 1)
+            {
+                <li class="list-group-item">
+                    <a asp-controller="Paginacion" asp-action="DepartamentoDetails" asp-route-posicion="@ViewBag.ANTERIOR"
+                       asp-route-iddept="@departamento.IdDepartamento">
+                        Anterior
+                    </a>
+                </li>     
+            }
+            @if (ViewBag.SIGUIENTE < ViewBag.ULTIMO)
+            {
+                <li class="list-group-item">
+                    <a asp-controller="Paginacion" asp-action="DepartamentoDetails" asp-route-posicion="@ViewBag.SIGUIENTE"
+                       asp-route-iddept="@departamento.IdDepartamento">
+                        Siguiente
+                    </a>
+                </li>     
+            }
+            <li class="list-group-item">
+                <a asp-controller="Paginacion" asp-action="DepartamentoDetails" asp-route-posicion="@ViewBag.ULTIMO"
+                   asp-route-iddept="@departamento.IdDepartamento">
+                    Ultimo
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ul>
+        <li>Id empleado: @Model.IdEmpleado</li>
+        <li>Apellido: @Model.Apellido</li>
+        <li>Oficio: @Model.Oficio</li>
+        <li>Salario: @Model.Salario</li>
+        <li>Id departamento: @Model.IdDepartamento</li>
+    </ul>
+}
+
+
+
+@* @await Component.InvokeAsync("EmpleadosDepartamento", new {iddept = Model.IdDepartamento, posicion = 1}) *@

@@ -131,6 +131,30 @@ namespace MvcCorePaginacionRegistros.Repositories
             };
         }
 
+        public async Task<List<Departamento>> GetDepartamentosAsync()
+        {
+            return await this.context.Departamentos.ToListAsync();
+        }
 
+        public async Task<Departamento> GetDepartamentoByIdAsync(int iddept)
+        {
+            return await this.context.Departamentos.FindAsync(iddept);
+        }
+
+        public async Task<Empleado> GetEmpleadosByDepartamentoAsync(int iddept, int posicion)
+        {
+            string sql = "SP_EMPLEADOS_DEPARTAMENTO @posicion, @iddept, @registros out";
+            SqlParameter pamPos = new SqlParameter("posicion", posicion);
+            SqlParameter pamDept = new SqlParameter("iddept", iddept);
+            SqlParameter pamReg = new SqlParameter("registros", 0);
+            pamReg.DbType = System.Data.DbType.Int32;
+            pamReg.Direction = System.Data.ParameterDirection.Output;
+            var consulta = this.context.Empleados.FromSqlRaw(sql, pamPos, pamDept, pamReg);
+            List<Empleado> empleados = await consulta.ToListAsync();
+            Empleado empleado = empleados.FirstOrDefault();
+            int registros = (int)pamReg.Value;
+            empleado.NumRegistros = registros;
+            return empleado;
+        }
     }
 }
