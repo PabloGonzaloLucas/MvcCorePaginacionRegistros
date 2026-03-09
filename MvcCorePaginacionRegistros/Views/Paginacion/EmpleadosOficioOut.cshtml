@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MvcCorePaginacionRegistros.Models.Empleado>
+
+@{
+    ViewData["Title"] = "PaginarGrupoEmpleados";
+}
+<h1>Empleados oficio OK</h1>
+
+<form method="post">
+    <label>Introduzca oficio</label>
+    <input type="text" name="oficio" class="form-control" />
+    <button class="btn btn-warning">
+        Buscar empleados
+    </button>
+</form>
+
+@{
+    int numRegistros = 0;
+    int numPagina = 1;
+    string oficio = "";
+    if (ViewBag.REGISTROS != null)
+    {
+        numRegistros = (int)ViewBag.REGISTROS;
+        oficio = ViewBag.OFICIO.ToString();
+    }
+}
+
+@if (Model != null)
+{
+    <ul class="list-group list-group-horizontal">
+        @for (int i = 1; i <= numRegistros; i += 3)
+        {
+            <li class="list-group-item">
+                <a asp-action="EmpleadosOficioOut" asp-controller="Paginacion" asp-route-posicion="@i" asp-route-oficio="@oficio">
+                    @numPagina
+                </a>
+            </li>
+            numPagina += 1;
+        }
+    </ul>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apellido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Oficio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Salario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdDepartamento)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Oficio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDepartamento)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
